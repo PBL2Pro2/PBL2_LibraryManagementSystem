@@ -49,7 +49,7 @@ public class MyPanel extends JPanel
         + "----------------------------------------------------------\n");
         this.add(new JScrollPane(mta));
         
-        JPanel bottomPanel = new JPanel(new GridLayout(4, 2, 5, 5));
+        JPanel bottomPanel = new JPanel(new GridLayout(8, 2, 5, 5));
 
         bottomPanel.add(ml_BorrowerName);
         bottomPanel.add(mtf_BorrowerName);
@@ -67,7 +67,7 @@ public class MyPanel extends JPanel
         mb_Run = new JButton("실행");
         mb_FloanD = new JButton("대출가능");
         mb_OloanD = new JButton("대출중");
-        mb_Clear = new JButton("Clear");bottomPanel.add(new JLabel("선택"));
+        mb_Clear = new JButton("Clear");
         
         bottomPanel.add(mb_Run);
         bottomPanel.add(mb_FloanD);
