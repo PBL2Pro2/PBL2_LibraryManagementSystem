@@ -40,7 +40,7 @@ public class MyAListener implements ActionListener
             mypanel.mta.append(outputTitle + "\n" + "-------------------------------------------------" + "\n");        
         }
         else if(index == 2 && e.getSource().equals(mypanel.mb_Run)){
-            String outputTitle = mypanel.libApp.loanOneBook(mypanel.mtf_BorrowerName.getText(), mypanel.mtf_CatalogNumber.getText());
+            String outputTitle = mypanel.libApp.loanOneBook(mypanel.mtf_UniqueID.getText(), mypanel.mtf_CatalogNumber.getText());
             mypanel.mta.append(outputTitle + "\n" + output);        
         }
         else if(index == 3 && e.getSource().equals(mypanel.mb_Run)){

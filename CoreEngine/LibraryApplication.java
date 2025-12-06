@@ -38,8 +38,8 @@ public class LibraryApplication
     }
     
     // UC#5 : 책 1권 대출
-    public String loanOneBook(String name, String catalogNumber){
-        return lms.loanBook(name, catalogNumber);
+    public String loanOneBook(String uniqueIdentifier, String catalogNumber){
+        return lms.loanBook(uniqueIdentifier, catalogNumber);
     }
     
     // UC#6 : 책 1권 반납

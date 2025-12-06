@@ -10,7 +10,7 @@ package CoreEngine.myClass;
 public class User extends DB_Element
 {
     private String name;
-    private Integer uniqueIdentifier;
+    private String uniqueIdentifier;
     private int loanCounter;
 
     /**
@@ -19,17 +19,17 @@ public class User extends DB_Element
      * @param name 이용자의 이름
      * @param stID 이용자의 학번
      */
-    public User(String name, Integer uniqueIdentifier)
+    public User(String name, String uniqueIdentifier)
     {
         this.name = name;
         this.uniqueIdentifier = uniqueIdentifier;
         this.loanCounter = 10;
     }
     /**
-     * User 객체의 고유식별번호를 반환하는 메소드
+     * User 객체의 이름을 반환하는 메소드
      *
      *
-     * @return    uniqueIdentifier 값을 반환
+     * @return    name 값을 반환
      */
     public String getName()
     {
@@ -43,7 +43,7 @@ public class User extends DB_Element
      */
     public String getID()
     {
-        return Integer.toString(uniqueIdentifier);
+        return this.uniqueIdentifier;
     }
     /**
      * User 객체의 loanCounter를 반환하는 메소드

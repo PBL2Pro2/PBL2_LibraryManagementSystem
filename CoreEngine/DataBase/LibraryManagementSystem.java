@@ -49,8 +49,7 @@ public class LibraryManagementSystem
         }
         
         // User 객체 생성 및 저장
-        Integer stID = Integer.parseInt(uniqueIdentifier);
-        User newUser = new User(name, stID);
+        User newUser = new User(name, uniqueIdentifier);
         userDB.addElement(newUser);
         
         return "이용자(" + name + ") 등록작업을 완료하였습니다.";
@@ -109,14 +108,17 @@ public class LibraryManagementSystem
     public String displayBooksOnLoan(){
         StringBuilder sb = new StringBuilder();
         
-        Collection<Loan> loans = loanDB.values();
-        Iterator<Loan> it = loans.iterator();
+        ArrayList<Book> books = bookDB.getAllElements();
+        Iterator<Book> it = books.iterator();
         while(it.hasNext()){
-            Loan loan = it.next();
-            sb.append(loan.toString()).append("\n");
+            Book book = it.next();
+            if(book.getOnLoan()){
+                sb.append(book.toString()).append("\n");
+            }
         }
         return sb.toString();
     }
+    
     /**
      * 책 대출 메소드
      * 이용자 이름과 책 등록번호를 받아 대출 처리
@@ -125,9 +127,9 @@ public class LibraryManagementSystem
      * @param catalogNumber 책의 등록번호
      * @return 대출 결과 메시지
      */
-    public String loanBook(String userName, String catalogNumber){
-        // User 검색 (유저네임이 아니라 유니크아이덴티파이어로 찾도록 수정)
-        User user = findUserByName(userName);
+    public String loanBook(String uniqueIdentifier, String catalogNumber){
+        
+        User user = findUserByUniqueIdentifier(uniqueIdentifier);
         if(user == null){
             return "등록되지 않은 이용자입니다.";
         }
@@ -161,7 +163,7 @@ public class LibraryManagementSystem
         loanDB.put(catalogNumber, newLoan);
         
         // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정 
-        return "책(" + book.getTitle() + ")이 이용자(" + userName + ")에게 대출되었습니다.";
+        return "책(" + book.getTitle() + ")이 이용자(" + user.getName() + ")에게 대출되었습니다.";
     }
     
     /**
@@ -207,14 +209,12 @@ public class LibraryManagementSystem
      * @param name 찾을 이용자의 이름
      * @return 해당 이름의 이용자, 없을 경우 null
      */
-    private User findUserByName(String name){
+    private User findUserByUniqueIdentifier(String uniqueIdentifier){
         ArrayList<User> users = userDB.getAllElements();
         Iterator<User> it = users.iterator();
         while(it.hasNext()){
             User user = it.next();
-            String userString = user.toString();
-            // toString() 형식: "[uniqueIdentifier] name"
-            if(userString.contains("] " + name)){
+            if(user.getID().equals(uniqueIdentifier)){
                 return user;
             }
         }
