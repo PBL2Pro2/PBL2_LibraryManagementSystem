@@ -52,7 +52,7 @@ public class LibraryManagementSystem
         User newUser = new User(name, uniqueIdentifier);
         userDB.addElement(newUser);
         
-        return "이용자(" + name + ") 등록작업을 완료하였습니다.";
+        return "이용자(" + name + " " + uniqueIdentifier + ") 등록작업을 완료하였습니다.";
     }
     
     /**
@@ -76,47 +76,6 @@ public class LibraryManagementSystem
         bookDB.addElement(newBook);
         
         return "책(" + title + ", " + author + ", " + catalogNumber + ") 등록작업을 완료하였습니다.";
-    }
-    
-    /**
-     * 대출 가능한 책 목록을 문자열로 반환하는 메소드
-     * OnLoan이 false인 책만 필터링하여 반환
-     * 
-     * @return 대출 가능한 책 목록
-     */
-    public String displayBooksForLoan(){
-        StringBuilder sb = new StringBuilder();
-    
-        ArrayList<Book> books = bookDB.getAllElements();
-        Iterator<Book> it = books.iterator();
-        while(it.hasNext()){
-            Book book = it.next();
-            if(!book.getOnLoan()){
-                sb.append(book.toString()).append("\n");
-            }
-        }
-    
-        return sb.toString();
-    }
-    
-    /**
-     * 대출 중인 책 목록을 문자열로 반환하는 메소드
-     * loanDB의 모든 대출 기록을 조회하여 반환
-     * 
-     * @return 대출 중인 책 목록
-     */
-    public String displayBooksOnLoan(){
-        StringBuilder sb = new StringBuilder();
-        
-        ArrayList<Book> books = bookDB.getAllElements();
-        Iterator<Book> it = books.iterator();
-        while(it.hasNext()){
-            Book book = it.next();
-            if(book.getOnLoan()){
-                sb.append(book.toString()).append("\n");
-            }
-        }
-        return sb.toString();
     }
     
     /**
@@ -200,6 +159,54 @@ public class LibraryManagementSystem
         
         // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정
         return "책(" + book.getTitle() + ")이 반납되었습니다.";
+    }
+    
+    /**
+     * 대출 가능한 책 목록을 문자열로 반환하는 메소드
+     * OnLoan이 false인 책만 필터링하여 반환
+     * 
+     * @return 대출 가능한 책 목록
+     */
+    public String displayBooksForLoan(){
+        StringBuilder sb = new StringBuilder();
+    
+        ArrayList<Book> books = bookDB.getAllElements();
+        
+        ArrayList<String> bookTexts = new ArrayList<String>();
+        for (Book book : books){
+            if(!book.getOnLoan()){
+                String bookText = book.getID() + " " + book.toString();
+                bookTexts.add(bookText);
+            }
+        }
+        
+        Collections.sort(bookTexts);
+        
+        for (String bookText : bookTexts) {
+            sb.append(bookText).append("\n");
+        }
+    
+        return sb.toString();
+    }
+    
+    /**
+     * 대출 중인 책 목록을 문자열로 반환하는 메소드
+     * loanDB의 모든 대출 기록을 조회하여 반환
+     * 
+     * @return 대출 중인 책 목록
+     */
+    public String displayBooksOnLoan(){
+        StringBuilder sb = new StringBuilder();
+        
+        ArrayList<String> keys = new ArrayList<String>(loanDB.keySet());
+        
+        Collections.sort(keys);
+        
+        for (String catalogNumber : keys) {
+            Loan loan = loanDB.get(catalogNumber);
+            sb.append(loan.toString()).append("\n");
+        }
+        return sb.toString();
     }
     
     /**
