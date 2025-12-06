@@ -161,7 +161,7 @@ public class LibraryManagementSystem
         loanDB.put(catalogNumber, newLoan);
         
         // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정 
-        return "책(" + catalogNumber + ")이 이용자(" + userName + ")에게 대출되었습니다.";
+        return "책(" + book.getTitle() + ")이 이용자(" + userName + ")에게 대출되었습니다.";
     }
     
     /**
@@ -197,7 +197,7 @@ public class LibraryManagementSystem
         user.upLoanCounter();
         
         // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정
-        return "책(" + catalogNumber + ")이 반납되었습니다.";
+        return "책(" + book.getTitle() + ")이 반납되었습니다.";
     }
     
     /**

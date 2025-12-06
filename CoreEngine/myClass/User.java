@@ -25,7 +25,16 @@ public class User extends DB_Element
         this.uniqueIdentifier = uniqueIdentifier;
         this.loanCounter = 10;
     }
-    
+    /**
+     * User 객체의 고유식별번호를 반환하는 메소드
+     *
+     *
+     * @return    uniqueIdentifier 값을 반환
+     */
+    public String getName()
+    {
+        return this.name;
+    }
     /**
      * User 객체의 고유식별번호를 반환하는 메소드
      *

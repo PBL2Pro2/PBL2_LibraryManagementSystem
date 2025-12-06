@@ -31,7 +31,16 @@ public class Book extends DB_Element
         this.title = title;
         this.OnLoan = false;
     }
-    
+    /**
+     * Book 객체의 title을 반환하는 메소드
+     *
+     *
+     * @return   titler 값을 반환
+     */
+    public String getTitle()
+    {
+        return this.title;
+    }
     /**
      * Book 객체의 고유 카탈로그넘버를 반환하는 메소드
      *
