@@ -24,11 +24,6 @@ public class MyAListener implements ActionListener
             JComboBox mcb = (JComboBox)e.getSource();
             index = mcb.getSelectedIndex(); 
 
-            output = mypanel.selectUC[index] + "자 : " + mypanel.mtf_BorrowerName.getText() + "\n"
-            + mypanel.selectUC[index] + "책 제목 : " + mypanel.mtf_BookTitle.getText() + "\n"
-            + mypanel.selectUC[index] + "책 저자 : " + mypanel.mtf_BookAuthor.getText() + "\n"
-            + mypanel.selectUC[index] + "책 등록번호 : " + mypanel.mtf_CatalogNumber.getText() + "\n"
-            + "-------------------------------------------------" + "\n";
         }   
 
         if(index == 0 && e.getSource().equals(mypanel.mb_Run)){
@@ -41,11 +36,11 @@ public class MyAListener implements ActionListener
         }
         else if(index == 2 && e.getSource().equals(mypanel.mb_Run)){
             String outputTitle = mypanel.libApp.loanOneBook(mypanel.mtf_UniqueID.getText(), mypanel.mtf_CatalogNumber.getText());
-            mypanel.mta.append(outputTitle + "\n");        
+            mypanel.mta.append(outputTitle + "\n" + "-------------------------------------------------" + "\n");        
         }
         else if(index == 3 && e.getSource().equals(mypanel.mb_Run)){
             String outputTitle = mypanel.libApp.returnOneBook(mypanel.mtf_CatalogNumber.getText());
-            mypanel.mta.append(outputTitle + "\n");
+            mypanel.mta.append(outputTitle + "\n" + "-------------------------------------------------" + "\n");
         }
         else if(e.getSource().equals(mypanel.mb_FloanD)){
             mypanel.mta.append("대출 가능한 책입니다\n\n" + mypanel.libApp.displayBookForLoan()+ "\n" + "-------------------------------------------------" + "\n");

@@ -205,7 +205,7 @@ public class LibraryManagementSystem
                 lines.add(line);
             }
 
-            Collections.sort(lines);   // 오름차순
+            Collections.sort(lines);
 
             for(String line : lines){
                 sb.append(line).append("\n");
