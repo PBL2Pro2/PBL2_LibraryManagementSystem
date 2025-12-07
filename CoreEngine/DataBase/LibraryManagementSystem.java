@@ -7,8 +7,8 @@ import CoreEngine.myClass.*;
  * 이용자, 책, 대출 데이터베이스를 생성하고 관리하는 클래스
  * 대출 작업을 수행하고, 데이터베이스에 객체를 추가, 출력하는 기능을 갖췄다.
  * 
- * @author (허진영_2020315044, 임기홍_2021320032, 안교관_2021320014)
- * @version (2025.12.05)
+ * @author (허진영_2020315044, 임기홍_2021320032)
+ * @version (2025.12.06)
  */
 public class LibraryManagementSystem
 {
@@ -61,7 +61,7 @@ public class LibraryManagementSystem
      * 
      * @param title 책의 제목
      * @param author 책의 저자
-     * @param catalogNumber 책의 등록번호
+     * @param catalogNumber 책의 고유 카탈로그번호
      * @return 등록 결과 메시지
      */
     public String registerBook(String title, String author, String catalogNumber){
@@ -80,84 +80,68 @@ public class LibraryManagementSystem
     
     /**
      * 책 대출 메소드
-     * 이용자 이름과 책 등록번호를 받아 대출 처리
+     * 이용자 이름과 책 고유 번호를 받아 대출 처리
      * 
      * @param userName 이용자의 이름
-     * @param catalogNumber 책의 등록번호
+     * @param catalogNumber 책의 고유 카탈로그번호
      * @return 대출 결과 메시지
      */
     public String loanBook(String uniqueIdentifier, String catalogNumber){
-        
         User user = findUserByUniqueIdentifier(uniqueIdentifier);
         if(user == null){
             return "등록되지 않은 이용자입니다.";
         }
         
-        // Book 검색
         Book book = bookDB.findElement(catalogNumber);
         if(book == null){
             return "등록되지 않은 책입니다.";
         }
         
-        // User 체크 (loanCounter > 0)
         if(user.getLoanCounter() <= 0){
             return "대출 가능 횟수를 초과했습니다.";
         }
         
-        // Book 체크 (OnLoan == false)
         if(book.getOnLoan()){
             return "이미 대출 중인 책입니다.";
         }
-        
-        // Loan 객체 생성 (User와 Book 연결)
+    
         Loan newLoan = new Loan(user, book);
-        
-        // Book 상태 변경 (OnLoan false에서 true로 변경)
+    
         book.setOnLoan(true);
         
-        // User loanCounter 감소 (남은 대출 가능 횟수 1 감소)
         user.downLoanCounter();
         
-        // loanDB에 저장 (링크 생성)
         loanDB.put(catalogNumber, newLoan);
-        
-        // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정 
+    
         return "책(" + book.getTitle() + ")이 이용자(" + user.getName() + ")에게 대출되었습니다.";
     }
     
     /**
      * 책 반납 메소드
-     * 책 등록번호를 받아 반납 처리
+     * 책 고유 카탈로그번호를 받아 반납 처리
      * 
-     * @param catalogNumber 책의 등록번호
+     * @param catalogNumber 책의 고유 카탈로그번호
      * @return 반납 결과 메시지
      */
     public String returnBook(String catalogNumber){
-        // 책 찾기 (시퀀스랑 비교 필요 )
         Book book = bookDB.findElement(catalogNumber);
         if(book == null){
             return "등록되지 않은 책입니다.";
         }
         
-        // 대출 중인지 확인
         Loan loan = loanDB.get(catalogNumber);
         if(!book.getOnLoan()){
             return "대출 중이 아닌 책입니다.";
         }
         
-        // User 가져오기
         User user = loan.getUser();
         
-        // loanDB에서 제거 (링크 삭제)
         loanDB.remove(catalogNumber);
         
-        // Book 상태 변경 (true 에서 false로)
         book.setOnLoan(false);
         
-        // User loanCounter 증가 (남은 대출 가능 횟수 복구)
         user.upLoanCounter();
         
-        // 책 카탈로그넘버가 아니라 bookTitle을 반환하도록 수정
         return "책(" + book.getTitle() + ")이 반납되었습니다.";
     }
     
