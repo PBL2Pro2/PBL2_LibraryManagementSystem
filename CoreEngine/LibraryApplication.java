@@ -2,7 +2,7 @@ package CoreEngine;
 import CoreEngine.DataBase.LibraryManagementSystem;
 
 /**
- * Mock-Up(LibraryApplication : 6개의 Use Case 제공)
+ * LibraryApplication 6개의 Use Case
  *
  * @author (임기홍_2021320032)
  * @version (2025.12.07)
