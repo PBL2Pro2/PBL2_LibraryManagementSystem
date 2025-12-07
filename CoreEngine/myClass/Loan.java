@@ -1,5 +1,4 @@
 package CoreEngine.myClass;
-
 /**
  * 대출 정보를 나타내는 클래스
  * User와 Book을 연결하는 링크 역할을 한다.
