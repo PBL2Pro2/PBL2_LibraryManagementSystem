@@ -41,11 +41,11 @@ public class MyAListener implements ActionListener
         }
         else if(index == 2 && e.getSource().equals(mypanel.mb_Run)){
             String outputTitle = mypanel.libApp.loanOneBook(mypanel.mtf_UniqueID.getText(), mypanel.mtf_CatalogNumber.getText());
-            mypanel.mta.append(outputTitle + "\n" + output);        
+            mypanel.mta.append(outputTitle + "\n");        
         }
         else if(index == 3 && e.getSource().equals(mypanel.mb_Run)){
             String outputTitle = mypanel.libApp.returnOneBook(mypanel.mtf_CatalogNumber.getText());
-            mypanel.mta.append(outputTitle + "\n" + output);
+            mypanel.mta.append(outputTitle + "\n");
         }
         else if(e.getSource().equals(mypanel.mb_FloanD)){
             mypanel.mta.append("대출 가능한 책입니다\n\n" + mypanel.libApp.displayBookForLoan()+ "\n" + "-------------------------------------------------" + "\n");
