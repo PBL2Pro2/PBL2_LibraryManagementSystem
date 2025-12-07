@@ -50,6 +50,34 @@ public class LibDB<T extends DB_Element> {
     }
     
     /**
+     * 데이터베이스에 저장된 모든 요소를 출력하는 메소드
+     * 콘솔에 직접 출력
+     * 
+     * 
+     */
+    public void printAllElements() {
+        for (T element : db) {
+            System.out.println(element);
+        }
+    }
+    
+    /**
+     * 데이터베이스에 저장된 모든 요소를 문자열로 반환하는 메소드
+     * GUI 출력을 위해 사용
+     * 
+     * @return 모든 요소의 문자열
+     */
+    public String getAllElementsAsString() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<T> it = db.iterator();
+        while (it.hasNext()) {
+            T element = it.next();
+            sb.append(element.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+    
+    /**
      * 데이터베이스의 모든 요소를 ArrayList로 반환하는 메소드
      * 
      * @return 데이터베이스의 ArrayList

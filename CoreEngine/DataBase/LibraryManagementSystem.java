@@ -100,7 +100,7 @@ public class LibraryManagementSystem
             return "대출 가능 횟수를 초과했습니다.";
         }
         
-        if(book.getOnLoan()){
+        if(loanDB.containsKey(book.getID())){
             return "이미 대출 중인 책입니다.";
         }
     
@@ -129,8 +129,8 @@ public class LibraryManagementSystem
         }
         
         Loan loan = loanDB.get(catalogNumber);
-        if(!book.getOnLoan()){
-            return "대출 중이 아닌 책입니다.";
+        if(loan == null){
+            return "대출 정보가 존재하지 않습니다.";
         }
         
         User user = loan.getUser();
@@ -152,25 +152,37 @@ public class LibraryManagementSystem
      */
     public String displayBooksForLoan(){
         StringBuilder sb = new StringBuilder();
-    
+        sb.append("===== 대출 가능한 책 목록 =====\n");
+
         ArrayList<Book> books = bookDB.getAllElements();
-        
-        ArrayList<String> bookTexts = new ArrayList<String>();
-        for (Book book : books){
-            if(!book.getOnLoan()){
-                String bookText = book.getID() + " " + book.toString();
-                bookTexts.add(bookText);
+        if(books.isEmpty()){
+            sb.append("등록된 책이 없습니다.\n");
+        } 
+        else {
+            ArrayList<String> lines = new ArrayList<String>();
+
+            for(Book book : books){
+                if(!loanDB.containsKey(book.getID())){
+                    String line = book.getID() + " " + book.toString();
+                    lines.add(line);
+                }
+            }
+
+            if(lines.isEmpty()){
+                sb.append("대출 가능한 책이 없습니다.\n");
+            }
+            else {
+                
+                Collections.sort(lines);
+                
+                for(String line : lines){
+                    sb.append(line).append("\n");
+                }
             }
         }
-        
-        Collections.sort(bookTexts);
-        
-        for (String bookText : bookTexts) {
-            sb.append(bookText).append("\n");
-        }
-    
         return sb.toString();
     }
+
     
     /**
      * 대출 중인 책 목록을 문자열로 반환하는 메소드
@@ -180,17 +192,29 @@ public class LibraryManagementSystem
      */
     public String displayBooksOnLoan(){
         StringBuilder sb = new StringBuilder();
-        
-        ArrayList<String> keys = new ArrayList<String>(loanDB.keySet());
-        
-        Collections.sort(keys);
-        
-        for (String catalogNumber : keys) {
-            Loan loan = loanDB.get(catalogNumber);
-            sb.append(loan.toString()).append("\n");
+        sb.append("===== 대출 중인 책 목록 =====\n");
+
+        if(loanDB.isEmpty()){
+            sb.append("대출 중인 책이 없습니다.\n");
         }
+        else {
+            ArrayList<String> lines = new ArrayList<String>();
+    
+            for(Loan loan : loanDB.values()){
+                String line = loan.getBook().getID() + " " + loan.toString();
+                lines.add(line);
+            }
+
+            Collections.sort(lines);   // 오름차순
+
+            for(String line : lines){
+                sb.append(line).append("\n");
+            }
+        }
+
         return sb.toString();
     }
+
     
     /**
      * 이름으로 이용자를 찾는 헬퍼 메소드
