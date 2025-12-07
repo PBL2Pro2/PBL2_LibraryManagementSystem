@@ -8,7 +8,7 @@ import CoreEngine.myClass.DB_Element;
  * 요소의 추가, 검색 및 출력 기능을 제공한다.
  * 
  * @author (2021320014 안교관)
- * @version (2025/12/05)
+ * @version (2025/12/06)
  */
 public class LibDB<T extends DB_Element> {
     
