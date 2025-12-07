@@ -6,7 +6,7 @@ package CoreEngine.myClass;
  * User와 Book의 부모 클래스이다.
  * 
  * @author (2021320032 임기홍)
- * @version (2025/10/25)
+ * @version (2025/12/07)
  */
 public abstract class DB_Element
 {

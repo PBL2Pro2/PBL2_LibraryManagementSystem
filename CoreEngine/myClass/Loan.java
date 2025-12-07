@@ -4,8 +4,8 @@ package CoreEngine.myClass;
  * 대출 정보를 나타내는 클래스
  * User와 Book을 연결하는 링크 역할을 한다.
  * 
- * @author (허진영_2020315044, 임기홍_2021320032, 안교관_2021320014)
- * @version (2025/12/05)
+ * @author (임기홍_2021320032)
+ * @version (2025/12/07)
  */
 public class Loan
 {
@@ -27,7 +27,7 @@ public class Loan
     /**
      * Loan 객체의 이용자를 반환하는 메소드
      *
-     * @return user 값을 반환
+     * @return user를 반환
      */
     public User getUser()
     {
@@ -37,7 +37,7 @@ public class Loan
     /**
      * Loan 객체의 책을 반환하는 메소드
      *
-     * @return book 값을 반환
+     * @return book을 반환
      */
     public Book getBook()
     {
@@ -47,9 +47,8 @@ public class Loan
     /**
      * Loan 객체의 정보를 String 타입으로 return하는 메소드
      *
-     * @return Loan 객체를 문자열로 반환
+     * @return Loan 객체를 특정 양식으로 문자열로 반환
      */
-    @Override
     public String toString()
     {
         return user.toString() + " ===> " + book.toString();
